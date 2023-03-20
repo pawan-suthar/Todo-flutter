@@ -14,6 +14,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final todoslist = Todo.todoList();
 
+  final _todocontrol = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +46,7 @@ class _HomeState extends State<Home> {
                         Todoitem(
                           todo: todoo,
                           ontodochange: _handletodo,
-                          ondelete: () {},
+                          ondelete: _deleteditem,
                         ),
                     ],
                   ),
@@ -73,6 +75,7 @@ class _HomeState extends State<Home> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: TextField(
+                      controller: _todocontrol,
                       decoration: InputDecoration(
                           hintText: "Add a new todo", border: InputBorder.none),
                     ),
@@ -85,7 +88,9 @@ class _HomeState extends State<Home> {
                       "+",
                       style: TextStyle(fontSize: 40),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _addtodo(_todocontrol.text);
+                    },
                     style: ElevatedButton.styleFrom(
                       primary: tdBlue,
                       minimumSize: Size(60, 60),
@@ -105,6 +110,22 @@ class _HomeState extends State<Home> {
     setState(() {
       todo.isdone = !todo.isdone;
     });
+  }
+
+  void _deleteditem(String id) {
+    setState(() {
+      todoslist.removeWhere((item) => item.id == id);
+    });
+  }
+
+  void _addtodo(String todo) {
+    setState(() {
+      todoslist.add(Todo(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          todotext: todo));
+    });
+
+    _todocontrol.clear();
   }
 
 // serch bar wala widget
