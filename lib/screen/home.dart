@@ -13,8 +13,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final todoslist = Todo.todoList();
-
   final _todocontrol = TextEditingController();
+  List<Todo> _foundtodo = [];
+
+  @override
+  void initState() {
+    _foundtodo = todoslist;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +48,7 @@ class _HomeState extends State<Home> {
                               fontSize: 30, fontWeight: FontWeight.w500),
                         ),
                       ),
-                      for (Todo todoo in todoslist)
+                      for (Todo todoo in _foundtodo.reversed)
                         Todoitem(
                           todo: todoo,
                           ontodochange: _handletodo,
@@ -128,6 +134,23 @@ class _HomeState extends State<Home> {
     _todocontrol.clear();
   }
 
+  void _filtertodo(String enteredleyword) {
+    List<Todo> results = [];
+    if (enteredleyword.isEmpty) {
+      results = todoslist;
+    } else {
+      results = todoslist
+          .where((item) => item.todotext!
+              .toLowerCase()
+              .contains(enteredleyword.toLowerCase()))
+          .toList();
+    }
+
+    setState(() {
+      _foundtodo = results;
+    });
+  }
+
 // serch bar wala widget
   Widget searchbox() {
     return Container(
@@ -135,6 +158,7 @@ class _HomeState extends State<Home> {
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(20)),
       child: TextField(
+        onChanged: (value) => _filtertodo(value), //serch on every key stroke
         decoration: InputDecoration(
             contentPadding: EdgeInsets.all(0),
             prefixIcon: Icon(
