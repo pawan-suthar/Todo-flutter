@@ -7,8 +7,8 @@ class Todo {
 
   static List<Todo> todoList() {
     return [
-      Todo(id: "01", todotext: "learn flutter"),
-      Todo(id: "02", todotext: "learn python"),
+      Todo(id: "01", todotext: "learn flutter", isdone: true),
+      Todo(id: "02", todotext: "learn python", isdone: true),
       Todo(id: "03", todotext: "learn c++"),
       Todo(id: "04", todotext: "learn django"),
       Todo(id: "05", todotext: "learn Html"),

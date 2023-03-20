@@ -24,15 +24,21 @@ class Todoitem extends StatelessWidget {
         contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         tileColor: Colors.white,
         leading: Icon(
-          Icons.check_box,
+          todo.isdone
+              ? Icons.check_box
+              : Icons
+                  .check_box_outline_blank, //agar todo done then tick otherwise only outline
           color: tdBlue,
         ),
         title: Text(
           todo.todotext!,
           style: TextStyle(
-              fontSize: 17,
-              color: tdBlack,
-              decoration: TextDecoration.lineThrough),
+            fontSize: 17,
+            color: tdBlack,
+            decoration: todo.isdone
+                ? TextDecoration.lineThrough
+                : null, // if tot is done then linethre other wise not lien
+          ),
         ),
         trailing: Container(
           padding: EdgeInsets.all(0),
