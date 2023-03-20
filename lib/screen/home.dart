@@ -40,7 +40,12 @@ class _HomeState extends State<Home> {
                               fontSize: 30, fontWeight: FontWeight.w500),
                         ),
                       ),
-                      for (Todo todoo in todoslist) Todoitem(todo: todoo),
+                      for (Todo todoo in todoslist)
+                        Todoitem(
+                          todo: todoo,
+                          ontodochange: _handletodo,
+                          ondelete: () {},
+                        ),
                     ],
                   ),
                 )
@@ -94,6 +99,12 @@ class _HomeState extends State<Home> {
         ],
       ),
     );
+  }
+
+  void _handletodo(Todo todo) {
+    setState(() {
+      todo.isdone = !todo.isdone;
+    });
   }
 
 // serch bar wala widget
